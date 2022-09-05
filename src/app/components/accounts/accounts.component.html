@@ -1,0 +1,18 @@
+<section class="pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card border-0">
+                    <div class="card-body p-0">
+                        <div>User</div>
+                        <!-- AUTO COMPLETE DROPDOWN -->
+                        <select  #mySelect (change)="onSelectUser(mySelect.value)" class="selectpicker form-control border-0 mb-1 px-4 py-4 rounded shadow">
+                            <option value="-1" disabled selected>User Name</option>
+                            <option *ngFor="let user of userList | async" value="{{user.id}}">{{user.displayName}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

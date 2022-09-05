@@ -1,0 +1,24 @@
+<div class="card mb-3 comment-wrapper {{selected && 'selected'}}" style="max-width: 700px;" (mouseover)="showEditButtons=true" (mouseleave)="showEditButtons=false">
+    <div class="row no-gutters align-items-center">
+        <div class="col-md-2">
+            <img src="{{'assets/users/'+ comment?.owner?.id +'.jpg'}}" class="card-img" alt="...">
+        </div>
+        <div class="col-md-4">
+            <div class="card-body">
+                <p class="card-text">{{comment?.owner?.displayName}}</p>
+                <p class="card-text">{{comment?.createdAt | dateAgo}}</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <p class="card-text">{{comment?.txt}}</p>
+        </div>
+    </div>
+    <div *ngIf="!readOnly && showEditButtons" class="row no-gutters align-items-center edit-buttons-wrapper">
+        <div class="col-md-6">
+            <button type="button" class="btn btn-primary" (click)="editComment($event)">edit</button>
+        </div>
+        <div class="col-md-6">
+            <button type="button" class="btn btn-primary" (click)="deleteComment($event)">delete</button>
+        </div>
+    </div>
+</div>

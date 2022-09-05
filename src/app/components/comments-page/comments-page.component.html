@@ -1,0 +1,37 @@
+
+<div class="comments-tree-wrapper" (click)="newComment.parentCommentId = undefined">
+  <ng-container *ngTemplateOutlet="Recursion; context:{ list: commentsTree}"></ng-container>
+</div>
+
+<ng-template #Recursion let-list="list">
+  <div class="li-item" *ngFor="let comment of list">
+    <div class="li-item-wrapper" *ngIf="!comment.deletedAt">
+      <div class="comment-outer-wrapper" (click)="onCommentSelected($event, comment)">
+        <app-comment (commentEdited)="onEditComment(comment)" [selected]="newComment.parentCommentId && comment.id == newComment.parentCommentId || false"
+          [comment]="comment" [readOnly]="comment.owner?.id !== selectedUser?.id"></app-comment>
+      </div>
+      <div class="children-wrapper" *ngIf="comment.children?.length > 0">
+        <ng-container *ngTemplateOutlet="Recursion; context:{ list: comment.children }">
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<div class="card mb-3" style="max-width: 700px;    margin: auto;">
+  <div class="row no-gutters">
+    <div class="col-md-2">
+      <img src="{{'assets/users/'+ selectedUser?.id +'.jpg'}}" class="card-img" alt="...">
+    </div>
+    <div class="col-md-7">
+      <div class="input-group">
+        <textarea class="form-control" [(ngModel)]="newComment.txt" aria-label="With textarea"></textarea>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <button (click)="onSubmit()" type="button" class="btn btn-primary" style="padding-right: 1rem;">submit</button>
+      <button *ngIf="editMode" (click)="cancelEditMode()" type="button" class="btn btn-light">X</button>
+    </div>
+  </div>
+</div>
